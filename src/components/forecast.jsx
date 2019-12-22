@@ -1,6 +1,6 @@
 import React from 'react';
 import MagicSeaWeed from './magicSeaWeed';
-import Surfline from './surfline';
+import Surfline from './surfline/surfline';
 
 
 import '../css/forecast.scss';

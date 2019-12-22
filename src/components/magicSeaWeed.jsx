@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+
 function MagicSeaWeed() {
     const [seaweedData, setseaweedData] = useState({});
-
-
-
-
+ 
     useEffect(() => {
 
     }, []);

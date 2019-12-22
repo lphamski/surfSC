@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Card, Button, AnchorButton } from "@blueprintjs/core";
-import "../css/surfline.scss";
+import { Card, RadioGroup, Radio } from "@blueprintjs/core";
+import SurflineWaveGraph from "./surflineWaveGraph";
+import "../../css/surfline.scss";
 
 function Surfline() {
-  // url query variable
   const [dataType, setDataType] = useState("wave");
-  // units variable
   const [surflineUnits, setSurflineUnits] = useState({});
+
   // array of wave data 144 objects; 6 days 1 entry per hour
   const [waveData, setWaveData] = useState([]);
-  // long lat for location
   const [longLat, setLongLat] = useState({});
 
   useEffect(() => {
@@ -28,28 +27,33 @@ function Surfline() {
     forecastData();
   }, [dataType]);
 
-  console.log(waveData);
-  console.log(surflineUnits);
+  //console.log(waveData);
+  //console.log(surflineUnits);
 
-  const getOkay = arr => {
-    
-      arr.map(wave => (
-        <div className="station" key={wave}>
-          {wave}
-        </div>
-      ));
-  };
+  const apiCallType = (value) => {
+    console.log(value);
+    setDataType(value);
+  }
+
 
   return (
     <Card className="Surfline-card">
       <h1>
         <strong>Pleasure Point</strong>
       </h1>
-      <p>
+      <RadioGroup label="Type of Forecast" inline={true} onChange={e => setDataType(e.target.value)} selectedValue={dataType}>
+        <Radio label="Wave" value="wave" large />
+        <Radio label="Wind" value="wind"large checked/>
+        <Radio label="Tides" value="tides" large/>
+        <Radio label="Weather" value="weather" large/>
+      </RadioGroup>
+      {/* <p>
         <strong>Longitude:</strong> {longLat.lon} <strong>Latitude:</strong>{" "}
         {longLat.lat}
-      </p>
-      <span>{getOkay}</span>
+      </p> */}
+      <p>{dataType}</p>
+      <SurflineWaveGraph waveData={waveData} />
+      
     </Card>
   );
 }
