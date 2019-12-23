@@ -12,7 +12,7 @@ const locations = ["Pleasure Point", "Seabright", "Capitola", "Soquel"];
 function Surfline() {
   const [dataType, setDataType] = useState("wave");
   const [surflineUnits, setSurflineUnits] = useState({});
-  const [location, setLocation] = useState(locations[2]);
+  const [location, setLocation] = useState(locations[0]);
   // array of wave data 144 objects; 6 days 1 entry per hour
   const [waveData, setWaveData] = useState([]);
 
@@ -59,7 +59,7 @@ function Surfline() {
         <Button className="Surfline-arrow-btn" onClick={changePrevLocation}>
           <FontAwesomeIcon icon={faChevronLeft} />
         </Button>
-        <h1>
+        <h1 className="Surfline-location">
           <strong>{location}</strong>
         </h1>
         <Button className="Surfline-arrow-btn" onClick={changeNextLocation}>
