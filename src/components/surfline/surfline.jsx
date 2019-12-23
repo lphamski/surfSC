@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { Card, RadioGroup, Radio } from "@blueprintjs/core";
+import { Card, RadioGroup, Radio, Button } from "@blueprintjs/core";
 import SurflineWaveGraph from "./surflineWaveGraph";
 import "../../css/surfline.scss";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+
+
+
 
 function Surfline() {
   const [dataType, setDataType] = useState("wave");
   const [surflineUnits, setSurflineUnits] = useState({});
-
   // array of wave data 144 objects; 6 days 1 entry per hour
   const [waveData, setWaveData] = useState([]);
-  const [longLat, setLongLat] = useState({});
 
   useEffect(() => {
     const forecastData = async () => {
@@ -21,7 +24,6 @@ function Surfline() {
       const data = await response.json();
       setSurflineUnits(data.associated.units);
       setWaveData(data.data.wave);
-      setLongLat(data.associated.location);
       console.log(data);
     };
     forecastData();
@@ -30,30 +32,27 @@ function Surfline() {
   //console.log(waveData);
   //console.log(surflineUnits);
 
-  const apiCallType = (value) => {
-    console.log(value);
-    setDataType(value);
-  }
-
-
   return (
     <Card className="Surfline-card">
-      <h1>
-        <strong>Pleasure Point</strong>
-      </h1>
+      <div className="Surfline-header">
+        <Button className="Surfline-arrow-btn">
+          <FontAwesomeIcon icon={faChevronLeft}/>
+        </Button>
+        <h1>
+          <strong>Pleasure Point</strong>
+        </h1>
+        <Button className="Surfline-arrow-btn">
+        <FontAwesomeIcon icon={faChevronRight}/>
+        </Button>
+      </div>
       <RadioGroup label="Type of Forecast" inline={true} onChange={e => setDataType(e.target.value)} selectedValue={dataType}>
         <Radio label="Wave" value="wave" large />
         <Radio label="Wind" value="wind"large checked/>
         <Radio label="Tides" value="tides" large/>
         <Radio label="Weather" value="weather" large/>
       </RadioGroup>
-      {/* <p>
-        <strong>Longitude:</strong> {longLat.lon} <strong>Latitude:</strong>{" "}
-        {longLat.lat}
-      </p> */}
       <p>{dataType}</p>
-      <SurflineWaveGraph waveData={waveData} />
-      
+      <SurflineWaveGraph waveData={waveData}  dataType={dataType}/>
     </Card>
   );
 }
