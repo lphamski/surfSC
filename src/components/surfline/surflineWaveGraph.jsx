@@ -2,7 +2,7 @@ import React from 'react';
 
 
 const SurflineWaveGraph = (props) => {
-    console.log(props);
+    //console.log(props);
     return (
         <div>
            
