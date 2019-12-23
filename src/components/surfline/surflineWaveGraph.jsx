@@ -2,11 +2,7 @@ import React from 'react';
 
 
 const SurflineWaveGraph = (props) => {
-    
     console.log(props);
-
-
-
     return (
         <div>
            
@@ -15,5 +11,4 @@ const SurflineWaveGraph = (props) => {
 
 
 }
-
 export default SurflineWaveGraph;
