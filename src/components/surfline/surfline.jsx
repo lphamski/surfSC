@@ -7,13 +7,18 @@ import {
   faChevronLeft,
   faChevronRight
 } from "@fortawesome/free-solid-svg-icons";
-const locations = ["Pleasure Point", "Steamer Lane Overview", "Cowell's Overview", "Jack's"];
+const locations = [
+  "Pleasure Point",
+  "Steamer Lane Overview",
+  "Cowell's Overview",
+  "Jack's"
+];
 const locationCodes = [
-  "5842041f4e65fad6a7708807", 
+  "5842041f4e65fad6a7708807",
   "584204214e65fad6a7709ce1",
   "584204214e65fad6a7709d20",
   "5842041f4e65fad6a770880b"
-]
+];
 
 function Surfline() {
   const [dataType, setDataType] = useState("wave");
@@ -28,16 +33,16 @@ function Surfline() {
       var url =
         "https://services.surfline.com/kbyg/spots/forecasts/" +
         dataType +
-        "?spotId=" + locationCodes[locCode];
+        "?spotId=" +
+        locationCodes[locCode];
       const response = await fetch(url);
       const data = await response.json();
       //setSurflineUnits(data.associated.units);
-      setMyData(data.data); 
+      setMyData(data.data);
     };
     forecastData();
-    
   }, [dataType, locCode]);
-  
+
   function changePrevLocation() {
     var ind = locations.indexOf(location);
     if (ind === 0) {
@@ -89,12 +94,13 @@ function Surfline() {
         <Radio label="Weather" value="weather" large />
       </RadioGroup>
       <p>{dataType}</p>
-      {myData &&
-      <SurflineWaveGraph
-        data={myData}
-        dataType={dataType}
-        location={location}
-      />}
+      {myData && (
+        <SurflineWaveGraph
+          data={myData}
+          dataType={dataType}
+          location={location}
+        />
+      )}
     </Card>
   );
 }
