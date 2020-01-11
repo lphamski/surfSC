@@ -21,7 +21,7 @@ function Surfline() {
   const [location, setLocation] = useState(locations[0]);
   const [locCode, setLocCode] = useState(0);
   // array of wave data 144 objects; 6 days 1 entry per hour
-  const [waveData, setWaveData] = useState([]);
+  const [myData, setMyData] = useState();
 
   useEffect(() => {
     const forecastData = async () => {
@@ -29,17 +29,15 @@ function Surfline() {
         "https://services.surfline.com/kbyg/spots/forecasts/" +
         dataType +
         "?spotId=" + locationCodes[locCode];
-      console.log(url)
       const response = await fetch(url);
       const data = await response.json();
-      setSurflineUnits(data.associated.units);
-      setWaveData(data.data.wave);
-      
+      //setSurflineUnits(data.associated.units);
+      setMyData(data.data); 
     };
     forecastData();
     
   }, [dataType, locCode]);
-
+  
   function changePrevLocation() {
     var ind = locations.indexOf(location);
     if (ind === 0) {
@@ -91,11 +89,12 @@ function Surfline() {
         <Radio label="Weather" value="weather" large />
       </RadioGroup>
       <p>{dataType}</p>
+      {myData &&
       <SurflineWaveGraph
-        waveData={waveData}
+        data={myData}
         dataType={dataType}
         location={location}
-      />
+      />}
     </Card>
   );
 }
